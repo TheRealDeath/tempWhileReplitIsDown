@@ -1,0 +1,39 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+public class Main
+{
+    public static int binomialCoefficent(int n, int k)
+    {
+        int sum = 0;
+        ArrayList<nAndK> binomials = new ArrayList<>();
+        binomials.add(new nAndK(n,k));
+        while(binomials.size() != 0)
+            for(int i = binomials.size()-1;i>=0;i--)
+            {
+                nAndK temp = binomials.remove(i);
+                if(temp.getK()-temp.getN() == 1){sum += 1; continue;}
+                if(temp.getK()-temp.getN() > 1 || temp.getN() <= 0 || temp.getK() <= 0) continue;
+                binomials.add(new nAndK(temp.getN()-1,temp.getK()-1));
+                binomials.add(new nAndK(temp.getN()-1,temp.getK()));
+            }
+        return sum;
+    }
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(binomialCoefficent(sc.nextInt(),sc.nextInt()));
+    }
+}
+class nAndK
+{
+    private int n, k;
+    public nAndK(int n, int k)
+    {
+        this.n = n;
+        this.k = k;
+    }
+    int getN(){return n;}
+    int getK(){return k;}
+    @Override
+    public String toString(){return n+" "+k;}
+}
